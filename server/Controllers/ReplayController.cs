@@ -4,6 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using osu.Game.Rulesets;
 using osu.Game.Rulesets.Catch;
 using osu.Game.Rulesets.Mania;
@@ -20,6 +22,11 @@ namespace vault.Controllers
     [Route("/replays")]
     public class ReplayController : Controller
     {
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum Sort { Timestamp, Score, MaxCombo, Miss }
+        public enum SortDirection { Ascending, Descending }
+        
+        
         private static readonly Ruleset[] BuiltInRulesets =
         {
             new OsuRuleset(),
@@ -34,16 +41,36 @@ namespace vault.Controllers
             this.dbContext = dbContext;
         }
 
+        [FromQuery(Name = "order")] public Sort Order { get; set; } = Sort.Timestamp;
+        [FromQuery(Name = "direction")] public SortDirection Direction { get; set; } = SortDirection.Descending;
         [FromQuery(Name = "page")] public int PageIndex { get; set; } = 0;
-
         [FromQuery(Name = "count")] public int PageCount { get; set; } = 50;
 
         [HttpGet]
-        [Route("recent")]
         public async Task<ActionResult<IEnumerable<Replay>>> Recent(CancellationToken cancellationToken)
         {
-            var replays = await dbContext.Replays
-                .OrderByDescending(replay => replay.Timestamp)
+            IQueryable<Replay> query = dbContext.Replays;
+#pragma warning disable CS8524
+            query = Direction switch
+            {
+                SortDirection.Descending => Order switch
+                {
+                    Sort.Timestamp => query.OrderByDescending(r => r.Timestamp),
+                    Sort.Score => query.OrderByDescending(r => r.Score),
+                    Sort.MaxCombo => query.OrderByDescending(r => r.MaxCombo),
+                    Sort.Miss => query.OrderByDescending(r => r.CountMiss)
+                },
+                SortDirection.Ascending => Order switch
+                {
+                    Sort.Timestamp => query.OrderBy(r => r.Timestamp),
+                    Sort.Score => query.OrderBy(r => r.Score),
+                    Sort.MaxCombo => query.OrderBy(r => r.MaxCombo),
+                    Sort.Miss => query.OrderBy(r => r.CountMiss)
+                }
+            };
+#pragma warning restore CS8524
+            
+            var replays = await query
                 .Skip(PageIndex * PageCount)
                 .Take(PageCount)
                 .Include(r => r.Beatmap)

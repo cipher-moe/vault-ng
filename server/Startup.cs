@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Pepper.Commons.Osu;
+using Unchase.Swashbuckle.AspNetCore.Extensions.Extensions;
 using DbContext = vault.Databases.DbContext;
 
 namespace vault
@@ -48,6 +49,7 @@ namespace vault
             {
                 options.CustomSchemaIds(type => type.ToString());
                 options.DocumentFilter<SwaggerPrefixDocumentFilter>(baseApiPath);
+                options.AddEnumsWithValuesFixFilters();
             });
         }
 
