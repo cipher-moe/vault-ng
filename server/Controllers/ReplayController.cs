@@ -75,6 +75,7 @@ namespace vault.Controllers
                 .Take(PageCount)
                 .Include(r => r.Beatmap)
                 .ThenInclude(b => b!.Detail)
+                .AsNoTracking()
                 .ToListAsync(cancellationToken);
             return Json(
                 replays
