@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.background-canvas {
+    @apply top-0 left-0 fixed h-full w-full;
+    z-index: -999;
+}
+
+.svg-filter-white {
+    filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(244deg) brightness(107%) contrast(105%);
+}
