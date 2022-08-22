@@ -77,6 +77,7 @@ namespace vault
             app.Map($"/{baseApiPath}", appBuilder =>
             {
                 appBuilder.UseRouting();
+                appBuilder.UseCors();
                 appBuilder.UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllerRoute(
