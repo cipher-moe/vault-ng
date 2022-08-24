@@ -1,7 +1,7 @@
 import humanizeDuration from "humanize-duration";
 import DualText from "./DualText";
-import icon from "../../IconUrl";
-import {Replay} from "../../interface";
+import icon from "../../../IconUrl";
+import {Replay} from "../../../interface";
 import {useMemo} from "react";
 
 function ReplayCard({ r } : { r: Replay }) {

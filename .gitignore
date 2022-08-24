@@ -375,4 +375,4 @@ MigrationBackup/
 **/*.min.css
 
 # Create React App output
-/build
+client/build
