@@ -27,6 +27,13 @@ namespace vault
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLogging();
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policyBuilder =>
+                {
+                    policyBuilder.AllowAnyOrigin();
+                });
+            });
             services.AddSingleton<HttpClient>();
 
             services.AddDbContext<DbContext>(builder =>
