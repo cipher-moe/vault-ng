@@ -33,15 +33,17 @@ function Recent() {
     }, [replays]);
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 py-4 px-6">
+        <>
             {!replays.length && loading && (
-                <div className={loadingTextClass}>
+                <div className={loadingTextClass + " pt-4"}>
                     Please wait...
                 </div>
             )}
-            {replays.map(r => {
-                return <ReplayCard r={r} key={r.sha256} />
-            })}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 py-4 px-6">
+                {replays.map(r => {
+                    return <ReplayCard r={r} key={r.sha256} />
+                })}
+            </div>
             {!ended && !!replays.length && (
                 <InView onChange={(inView) => {
                     if (inView && !loading) {
@@ -53,7 +55,7 @@ function Recent() {
                     </div>
                 </InView>
             )}
-        </div>
+        </>
     )
 }
 
