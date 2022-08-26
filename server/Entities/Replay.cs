@@ -80,5 +80,8 @@ namespace vault.Entities
         
         [JsonProperty("beatmap")]
         public Beatmap? Beatmap { get; set; }
+        
+        [JsonProperty("difficulty")]
+        public BeatmapDifficulty? Difficulty { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace vault.Entities
         public double StarRating { get; set; }
         
         [Column("mod", TypeName = "int(11)")]
-        public int Mod { get; set; }
+        public long Mod { get; set; }
         
         [Column("key_count", TypeName = "int(11)")]
         public int KeyCount { get; set; }

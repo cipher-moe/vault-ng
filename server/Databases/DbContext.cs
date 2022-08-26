@@ -19,6 +19,11 @@ namespace vault.Databases
                 .WithOne()
                 .HasForeignKey<Replay>(r => r.BeatmapHash)
                 .IsRequired(false);
+            modelBuilder.Entity<Replay>()
+                .HasOne(r => r.Difficulty)
+                .WithOne()
+                .HasForeignKey<Replay>(r => new { r.BeatmapHash, r.Mods })
+                .IsRequired(false);
             modelBuilder.Entity<Beatmap>().ToTable("beatmaps").HasKey(r => r.BeatmapHash);
             modelBuilder.Entity<Beatmap>()
                 .HasOne(r => r.Detail)
@@ -26,6 +31,9 @@ namespace vault.Databases
                 .HasForeignKey<BeatmapDetail>(r => r.Md5)
                 .IsRequired(false);
 
+            modelBuilder.Entity<BeatmapDifficulty>().ToTable("beatmap_difficulty").HasKey(d => new { d.Md5, d.Mod });
+            
+            
             modelBuilder.Entity<MostPlayedMapsAggregateRecord>()
                 .HasBaseType((Type?)null)
                 .HasKey(r => r.BeatmapHash);

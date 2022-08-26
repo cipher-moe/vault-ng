@@ -75,10 +75,12 @@ namespace vault.Controllers
             var replays = await query
                 .Skip(PageIndex * PageCount)
                 .Take(PageCount)
+                .Include(r => r.Difficulty)
                 .Include(r => r.Beatmap)
                 .ThenInclude(b => b!.Detail)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
+
             return Json(
                 replays
                     .Select(r =>
