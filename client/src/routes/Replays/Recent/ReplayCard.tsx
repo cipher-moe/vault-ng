@@ -63,7 +63,7 @@ function ReplayCard({ r } : { r: Replay }) {
                             {detail?.diffName || '(unknown difficulty)'}
                         </div>
                         <div>
-                            {difficulty?.starRating.toFixed(3)} ★
+                            {difficulty?.starRating.toFixed(2)} ★
                         </div>
                     </div>
                     <div className="flex flex-row justify-between">
