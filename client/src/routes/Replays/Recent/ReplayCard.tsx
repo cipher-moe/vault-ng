@@ -110,7 +110,6 @@ function ReplayCard({ r } : { r: Replay }) {
                     <div className="flex flex-row justify-between">
                         <div>
                             <b className="drop-shadow-lg">{r.score.toLocaleString('en-US')}</b>
-                            <span className="drop-shadow-lg font-light text-sm">x</span>
                         </div>
                         <div>
                             <b className="items-end">
