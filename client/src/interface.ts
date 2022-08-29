@@ -42,4 +42,16 @@ export interface Replay {
     sha256: string;
     accuracy: number;
     beatmap?: Beatmap;
+    difficulty?: BeatmapDifficulty;
+}
+
+export interface BeatmapDifficulty {
+    md5: string;
+    diffCs: number;
+    diffAr: number;
+    diffHp: number;
+    diffOd: number;
+    starRating: number;
+    mod: number;
+    keyCount: number;
 }

@@ -39,7 +39,7 @@ function Recent() {
                     Please wait...
                 </div>
             )}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 py-4 px-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:w-[95%] xl:w-[85%] mx-auto gap-8 py-4 px-6">
                 {replays.map(r => {
                     return <ReplayCard r={r} key={r.sha256} />
                 })}

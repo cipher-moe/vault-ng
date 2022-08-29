@@ -4,8 +4,11 @@ import icon from "../../../IconUrl";
 import {Replay} from "../../../interface";
 import {useMemo} from "react";
 
+const difficultyStatContainerStyle = "flex flex-row items-center gap-1";
+
 function ReplayCard({ r } : { r: Replay }) {
     let { detail } = r.beatmap || {};
+    let { difficulty } = r;
     return (
         <div className="bg-white/50 rounded-xl flex flex-col">
             <div className="text-black text-center">
@@ -52,10 +55,44 @@ function ReplayCard({ r } : { r: Replay }) {
                     </div>
                 </div>
                 <div className="bg-black/60 px-2">
-                    <div className={detail?.diffName ? "text-yellow-200" : "text-red-200"}>
-                        {detail?.diffName || '(unknown difficulty)'}
+                    <div className={
+                        (detail?.diffName ? "text-yellow-200" : "text-red-200")
+                            + " flex flex-row items-center justify-between"
+                    }>
+                        <div>
+                            {detail?.diffName || '(unknown difficulty)'}
+                        </div>
+                        <div>
+                            {difficulty?.starRating.toFixed(3)} ★
+                        </div>
                     </div>
                     <div className="flex flex-row justify-between">
+                        {(r.mode === 0 || r.mode === 2) && (
+                            <div className={difficultyStatContainerStyle}>
+                                <span className="text-sm">CS</span>
+                                <span className="font-bold">{+(difficulty?.diffCs.toFixed(2) || 0)}</span>
+                            </div>
+                        )}
+                        {(r.mode === 0 || r.mode === 2) && (
+                            <div className={difficultyStatContainerStyle}>
+                                <span className="text-sm">AR</span>
+                                <span className="font-bold">{+(difficulty?.diffAr.toFixed(2) || 0)}</span>
+                            </div>
+                        )}
+                        <div className={difficultyStatContainerStyle}>
+                            <span className="text-sm">HP</span>
+                            <span className="font-bold">{+(difficulty?.diffHp.toFixed(2) || 0)}</span>
+                        </div>
+                        <div className={difficultyStatContainerStyle}>
+                            <span className="text-sm">OD</span>
+                            <span className="font-bold">{+(difficulty?.diffOd.toFixed(2) || 0)}</span>
+                        </div>
+                        {r.mode === 3 && (
+                            <div className={difficultyStatContainerStyle}>
+                                <span className="text-sm">Keys</span>
+                                <span className="font-bold">{difficulty?.keyCount}</span>
+                            </div>
+                        )}
                     </div>
                 </div>
 
